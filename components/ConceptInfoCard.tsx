@@ -2,13 +2,13 @@
 import React from 'react';
 import Section from './ui/Section';
 import Badge from './ui/Badge';
-import { Product } from '../types';
+import { useProductStore } from '../stores/productStore';
 
-interface ConceptInfoCardProps {
-  product: Product;
-}
+const ConceptInfoCard: React.FC = () => {
+  const product = useProductStore(state => state.currentProduct);
 
-const ConceptInfoCard: React.FC<ConceptInfoCardProps> = ({ product }) => {
+  if (!product) return null;
+
   return (
     <Section className="mt-2">
       <div className="flex items-center justify-between mb-4">

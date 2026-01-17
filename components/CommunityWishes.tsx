@@ -2,17 +2,19 @@
 import React from 'react';
 import Section from './ui/Section';
 import Badge from './ui/Badge';
-import { MOCK_WISHES } from '../data/mockData';
+import { useProductStore } from '../stores/productStore';
 import { Heart, MessageSquarePlus } from 'lucide-react';
 
 const CommunityWishes: React.FC = () => {
+  const wishes = useProductStore(state => state.wishes);
+
   return (
     <Section className="mt-2 mb-4">
       <div className="flex items-center justify-between mb-5">
         <div className="flex items-center gap-2">
           <h2 className="font-bold text-[16px]">未来许愿池</h2>
           <Badge variant="outline" className="text-[#ff1a47] border-[#ff1a47]/20 bg-[#ff1a47]/5">
-            1.2k个愿景
+            {wishes.length}k个愿景
           </Badge>
         </div>
         <button className="flex items-center gap-1 text-[#ff1a47] text-sm font-bold">
@@ -22,7 +24,7 @@ const CommunityWishes: React.FC = () => {
       </div>
 
       <div className="space-y-6">
-        {MOCK_WISHES.map((wish) => (
+        {wishes.map((wish) => (
           <div key={wish.id} className="flex gap-3">
             <img src={wish.avatar} className="w-9 h-9 rounded-full bg-gray-100 shrink-0" alt={wish.user} />
             <div className="flex-1">

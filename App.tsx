@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import TopHeader from './components/TopHeader';
 import ProductGallery from './components/ProductGallery';
 import PromotionBanner from './components/PromotionBanner';
@@ -7,37 +7,58 @@ import BottomNavBar from './components/BottomNavBar';
 import ProductHeader from './components/ProductHeader';
 import ConceptInfoCard from './components/ConceptInfoCard';
 import CommunityWishes from './components/CommunityWishes';
-import { useProduct } from './hooks/useProduct';
+import { PresenterProvider } from './contexts/PresenterContext';
+import { presenterInstance } from './presenters/AppPresenter';
+import { useProductStore } from './stores/productStore';
 
-const App: React.FC = () => {
-  const { product, loading } = useProduct();
+// 业务编排层：负责整体页面结构的组织
+const AppContent: React.FC = () => {
+  const { currentProduct, loading } = useProductStore();
 
-  if (loading || !product) {
-    return <div className="min-h-screen bg-white flex items-center justify-center">加载中...</div>;
+  if (loading || !currentProduct) {
+    return (
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center gap-4">
+        <div className="w-8 h-8 border-4 border-[#3b82f6] border-t-transparent rounded-full animate-spin"></div>
+        <span className="text-gray-400 text-sm">链接未来中...</span>
+      </div>
+    );
   }
 
   return (
     <div className="min-h-screen bg-[#f7f7f7] pb-24">
       <TopHeader />
       
-      {/* 1. 未来蓝图展示区 */}
-      <ProductGallery images={product.images} />
+      {/* 模块：视觉展示层 */}
+      <ProductGallery images={currentProduct.images} />
 
-      {/* 2. 众筹激励横幅 */}
+      {/* 模块：运营激励层 */}
       <PromotionBanner />
 
-      {/* 3. 核心概念区：基金、愿景、标签 */}
-      <ProductHeader product={product} />
+      {/* 模块：核心信息层 */}
+      <ProductHeader />
 
-      {/* 4. 实验室进度说明 */}
-      <ConceptInfoCard product={product} />
+      {/* 模块：详情说明层 */}
+      <ConceptInfoCard />
 
-      {/* 5. 梦想家社区：反馈与许愿 */}
+      {/* 模块：共创社区层 */}
       <CommunityWishes />
 
-      {/* 6. 底部固定操作栏 */}
+      {/* 全局导航控制 */}
       <BottomNavBar />
     </div>
+  );
+};
+
+const App: React.FC = () => {
+  useEffect(() => {
+    // 初始引导
+    presenterInstance.init();
+  }, []);
+
+  return (
+    <PresenterProvider presenter={presenterInstance}>
+      <AppContent />
+    </PresenterProvider>
   );
 };
 
