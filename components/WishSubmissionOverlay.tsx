@@ -32,7 +32,7 @@ const WishSubmissionOverlay: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] bg-white flex flex-col animate-in slide-in-from-right duration-300">
+    <div className="fixed inset-0 z-[110] bg-white flex flex-col animate-in slide-in-from-right duration-300">
       {/* 顶部导航栏 */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
         <button onClick={handleBack} className="p-2 -ml-2 text-gray-800">

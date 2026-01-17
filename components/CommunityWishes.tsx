@@ -10,6 +10,9 @@ const CommunityWishes: React.FC = () => {
   const wishes = useWishStore(state => state.wishes);
   const presenter = usePresenter();
 
+  // 首页仅展示前 3 条愿景
+  const displayWishes = wishes.slice(0, 3);
+
   return (
     <Section className="mt-2 mb-4">
       <div className="flex items-center justify-between mb-5">
@@ -29,7 +32,7 @@ const CommunityWishes: React.FC = () => {
       </div>
 
       <div className="space-y-6">
-        {wishes.map((wish) => (
+        {displayWishes.map((wish) => (
           <div key={wish.id} className="flex gap-3 animate-in fade-in duration-500">
             <img src={wish.avatar} className="w-9 h-9 rounded-full bg-gray-100 shrink-0" alt={wish.user} />
             <div className="flex-1">
@@ -52,8 +55,11 @@ const CommunityWishes: React.FC = () => {
         ))}
       </div>
       
-      <button className="w-full mt-6 py-3 border border-gray-100 rounded-lg text-gray-400 text-sm font-medium active:bg-gray-50 transition-colors">
-        查看更多梦想家的提议 ›
+      <button 
+        onClick={() => presenter.wishManager.openList()}
+        className="w-full mt-6 py-3 border border-gray-100 rounded-lg text-gray-400 text-sm font-medium active:bg-gray-50 transition-colors"
+      >
+        查看更多梦想家的提议 ({wishes.length}) ›
       </button>
     </Section>
   );

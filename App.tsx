@@ -8,6 +8,7 @@ import ProductHeader from './components/ProductHeader';
 import ConceptInfoCard from './components/ConceptInfoCard';
 import CommunityWishes from './components/CommunityWishes';
 import WishSubmissionOverlay from './components/WishSubmissionOverlay';
+import WishesListOverlay from './components/WishesListOverlay';
 import { PresenterProvider } from './contexts/PresenterContext';
 import { presenterInstance } from './presenters/AppPresenter';
 import { useProductStore } from './stores/productStore';
@@ -49,6 +50,9 @@ const AppContent: React.FC = () => {
 
       {/* 独立业务浮层：许愿发布页 */}
       <WishSubmissionOverlay />
+
+      {/* 独立业务浮层：愿景全列表页 */}
+      <WishesListOverlay />
     </div>
   );
 };
