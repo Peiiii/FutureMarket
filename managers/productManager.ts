@@ -21,18 +21,11 @@ export class ProductManager {
     }
   };
 
-  // 赞助研发计划（逻辑占位）
+  // 赞助研发计划
   sponsorProject = () => {
     const product = useProductStore.getState().currentProduct;
     if (product) {
       console.log(`Sponsoring project: ${product.name}`);
-      // 这里可以执行更新 Store 等逻辑
     }
-  };
-
-  // 提交许愿
-  submitWish = (content: string) => {
-    console.log(`Submitted wish: ${content}`);
-    // 更新本地 Store 示例
   };
 }

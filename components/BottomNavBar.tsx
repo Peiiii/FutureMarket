@@ -28,7 +28,7 @@ const BottomNavBar: React.FC = () => {
         <ActionButton 
           variant="secondary" 
           className="!bg-orange-50 !text-orange-600"
-          onClick={() => presenter.productManager.submitWish('User wants to join wishlist')}
+          onClick={() => presenter.wishManager.openSubmission()}
         >
           加入许愿单
         </ActionButton>

@@ -1,11 +1,14 @@
 
 import { ProductManager } from '../managers/productManager';
+import { WishManager } from '../managers/wishManager';
 
 export class AppPresenter {
   public productManager: ProductManager;
+  public wishManager: WishManager;
 
   constructor() {
     this.productManager = new ProductManager();
+    this.wishManager = new WishManager();
   }
 
   // 初始化全局业务

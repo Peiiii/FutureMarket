@@ -7,6 +7,7 @@ import BottomNavBar from './components/BottomNavBar';
 import ProductHeader from './components/ProductHeader';
 import ConceptInfoCard from './components/ConceptInfoCard';
 import CommunityWishes from './components/CommunityWishes';
+import WishSubmissionOverlay from './components/WishSubmissionOverlay';
 import { PresenterProvider } from './contexts/PresenterContext';
 import { presenterInstance } from './presenters/AppPresenter';
 import { useProductStore } from './stores/productStore';
@@ -25,7 +26,7 @@ const AppContent: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#f7f7f7] pb-24">
+    <div className="min-h-screen bg-[#f7f7f7] pb-24 relative">
       <TopHeader />
       
       {/* 模块：视觉展示层 */}
@@ -45,6 +46,9 @@ const AppContent: React.FC = () => {
 
       {/* 全局导航控制 */}
       <BottomNavBar />
+
+      {/* 独立业务浮层：许愿发布页 */}
+      <WishSubmissionOverlay />
     </div>
   );
 };
