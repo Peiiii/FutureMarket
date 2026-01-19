@@ -9,12 +9,15 @@ import ConceptInfoCard from './components/ConceptInfoCard';
 import CommunityWishes from './components/CommunityWishes';
 import WishSubmissionOverlay from './components/WishSubmissionOverlay';
 import WishesListOverlay from './components/WishesListOverlay';
+import WishlistFeedback from './components/WishlistFeedback';
+import WishlistDrawer from './components/WishlistDrawer';
+import FutureMarket from './components/FutureMarket'; 
 import { PresenterProvider } from './contexts/PresenterContext';
 import { presenterInstance } from './presenters/AppPresenter';
 import { useProductStore } from './stores/productStore';
+import { useNavigationStore } from './stores/navigationStore';
 
-// 业务编排层：负责整体页面结构的组织
-const AppContent: React.FC = () => {
+const DetailContent: React.FC = () => {
   const { currentProduct, loading } = useProductStore();
 
   if (loading || !currentProduct) {
@@ -27,39 +30,37 @@ const AppContent: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#f7f7f7] pb-24 relative">
+    <div className="animate-in fade-in duration-500">
       <TopHeader />
-      
-      {/* 模块：视觉展示层 */}
       <ProductGallery images={currentProduct.images} />
-
-      {/* 模块：运营激励层 */}
       <PromotionBanner />
-
-      {/* 模块：核心信息层 */}
       <ProductHeader />
-
-      {/* 模块：详情说明层 */}
       <ConceptInfoCard />
-
-      {/* 模块：共创社区层 */}
       <CommunityWishes />
+    </div>
+  );
+};
 
-      {/* 全局导航控制 */}
+const AppContent: React.FC = () => {
+  const activePage = useNavigationStore(state => state.activePage);
+
+  return (
+    <div className="min-h-screen bg-[#f7f7f7] pb-24 relative">
+      {/* 页面切换逻辑 */}
+      {activePage === 'market' ? <FutureMarket /> : <DetailContent />}
+
+      {/* 全局 UI 组件 */}
       <BottomNavBar />
-
-      {/* 独立业务浮层：许愿发布页 */}
       <WishSubmissionOverlay />
-
-      {/* 独立业务浮层：愿景全列表页 */}
       <WishesListOverlay />
+      <WishlistFeedback />
+      <WishlistDrawer />
     </div>
   );
 };
 
 const App: React.FC = () => {
   useEffect(() => {
-    // 初始引导
     presenterInstance.init();
   }, []);
 
